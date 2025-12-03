@@ -32,6 +32,7 @@ class QFTPServer(BaseServer):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.adaptor_ip = kwargs.get("adaptor_ip", None)
         self.mocking_server = choice(
             [
                 "ProFTPD 1.2.10",
@@ -147,7 +148,10 @@ class QFTPServer(BaseServer):
         factory = FTPFactory(p)
         factory.protocol = CustomFTPProtocol
         factory.welcomeMessage = "ProFTPD 1.2.10"
-        reactor.listenTCP(port=self.port, factory=factory)
+
+        bind_ip = _q_s.adaptor_ip if _q_s.adaptor_ip else ""
+        reactor.listenTCP(port=self.port, factory=factory, interface=bind_ip)
+       
         reactor.run()
 
     def test_server(self, ip=None, port=None, username=None, password=None):
