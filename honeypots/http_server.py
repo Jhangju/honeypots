@@ -18,7 +18,7 @@ class QHTTPServer(BaseHttpServer):
         self.adaptor_ip = kwargs.get("adaptor_ip", None)
     def server_main(self):
         resource = self.MainResource(hp_server=self)
-        #Adaptor
+  #Adaptor
         bind_ip = self.adaptor_ip if self.adaptor_ip else ""
         reactor.listenTCP(self.port, Site(resource), interface=bind_ip)
         reactor.run()

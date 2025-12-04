@@ -293,11 +293,9 @@ class QIPPServer(BaseServer):
                 return version + status_code + request_id + attributes
 
 
-
         #Adaptor
         bind_ip = self.adaptor_ip if self.adaptor_ip else ""
         reactor.listenTCP(self.port, Site(MainResource()), interface=bind_ip)
-
         reactor.run()
 
     def test_server(self, ip=None, port=None):
